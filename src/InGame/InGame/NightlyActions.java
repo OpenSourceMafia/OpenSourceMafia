@@ -57,29 +57,35 @@ public class NightlyActions {
                     NightlyActions.getTownList().get( i ).nightActionString();
                 }
                 else {
+                    if (!NightlyActions.getTownList().get( i ).isWillSet()) {
+                        NightlyActions.getTownList().get( i ).setLastWill();
+                        NightlyActions.getTownList().get( i ).displayLastWill();
+                        System.out.println( NightlyActions.getTownList().get( i ).getPlayerName() + " is dead.");
+                    }
                     deadTownCount++;
                     if (deadTownCount >= NightlyActions.getTownList().size()) {
                         System.out.println( "Mafia wins." );
                         return;
                     }
-                    
-                    System.out.println( NightlyActions.getTownList().get( i ).getPlayerName() + " is dead.");
                 }
             }
 
             for ( int i = 0; i < NightlyActions.getMafiaList().size(); i++ ) {
-                if ( !NightlyActions.getTownList().get( i ).isDead() ) {
+                if ( !NightlyActions.getMafiaList().get( i ).isDead() ) {
                     NightlyActions.getMafiaList().get( i ).nightAction();
                     NightlyActions.getMafiaList().get( i ).nightActionString();
                 }
                 else {
+                    if (!NightlyActions.getMafiaList().get( i ).isWillSet()) {
+                        NightlyActions.getMafiaList().get( i ).setLastWill();
+                        NightlyActions.getMafiaList().get( i ).displayLastWill();
+                        
+                    }
                     deadMafiaCount++;
                     if (deadMafiaCount >= NightlyActions.getMafiaList().size()) {
                         System.out.println( "Town wins." );
                         return;
-                    }
-                    
-                    System.out.println( NightlyActions.getMafiaList().get( i ).getPlayerName() + " is dead.");
+                    } 
                 }
             }
         }

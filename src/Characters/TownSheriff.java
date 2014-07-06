@@ -29,14 +29,16 @@ public class TownSheriff extends AbstractPlayer {
         for ( int i = 0; i < NightlyActions.getTownList().size(); i++ ) {
 
             if ( candidateName.equals( ( NightlyActions.getTownList().get( i ) ).getPlayerName() ) ) {
-                return NightlyActions.getTownList().get( i ).getAffiliation();
+                System.out.println( candidateName + " was investigated and was discovered to be from the "+ NightlyActions.getTownList().get( i ).getAffiliation() + "." );
+                //return NightlyActions.getTownList().get( i ).getAffiliation();
             }
         }
 
         for ( int i = 0; i < NightlyActions.getMafiaList().size(); i++ ) {
 
             if ( candidateName.equals( ( NightlyActions.getMafiaList().get( i ) ).getPlayerName() ) ) {
-                return NightlyActions.getMafiaList().get( i ).getAffiliation();
+                System.out.println( candidateName + " was investigated and was discovered to be from the " + NightlyActions.getMafiaList().get( i ).getAffiliation() + "." );
+                //return NightlyActions.getMafiaList().get( i ).getAffiliation();
             }
         }
 

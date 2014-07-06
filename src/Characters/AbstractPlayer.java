@@ -1,6 +1,7 @@
 package Characters;
 
 import java.util.List;
+import java.util.Scanner;
 
 import InGame.NightlyActions;
 
@@ -22,7 +23,9 @@ public abstract class AbstractPlayer {
     private String role;
     private String affiliation;
     private String playerName;
+    private String lastWill;
 
+    private boolean isWillSet;
     private boolean isDead;
     private boolean isDoused;
     private boolean isHealed;
@@ -31,6 +34,22 @@ public abstract class AbstractPlayer {
 
     public AbstractPlayer() {
 
+    }
+    
+    /**
+     * Set last will (Town and Mafia)
+     * 
+     * @MODIFIES: Set's player's last will (displayed on death)
+     */
+    public void setLastWill() {
+        Scanner in = new Scanner( System.in );
+        System.out.println( getPlayerName() + ": Enter your last will." );
+        lastWill = in.nextLine();
+    }
+    
+    public void displayLastWill() {
+        System.out.println( playerName + "'s last will: "+ lastWill );
+        setWillSet(true);
     }
 
     /**
@@ -135,6 +154,14 @@ public abstract class AbstractPlayer {
 
     public void setRole( String role ) {
         this.role = role;
+    }
+    
+    public boolean isWillSet() {
+        return isWillSet;
+    }
+
+    public void setWillSet( boolean isWillSet ) {
+        this.isWillSet = isWillSet;
     }
 
     public boolean isDead() {

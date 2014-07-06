@@ -55,8 +55,8 @@ public class CitizenAction extends JPanel implements ActionListener {
 
     public CitizenAction(TownCitizen citizen) {
         citizenToPerform = citizen;
-        ImageIcon leftButtonIcon = createImageIcon( "/images/right.gif" );
-        ImageIcon rightButtonIcon = createImageIcon( "/images/left.gif" );
+        ImageIcon leftButtonIcon = createImageIcon( "images/right.gif" );
+        ImageIcon rightButtonIcon = createImageIcon( "images/left.gif" );
 
         b1 = new JButton( "Do not wear bulletproof vest.", rightButtonIcon );
         b1.setVerticalTextPosition( AbstractButton.CENTER );
