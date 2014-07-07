@@ -26,6 +26,8 @@ public abstract class AbstractPlayer {
     private String lastWill;
 
     private boolean isWillSet;
+    private boolean isLynched;
+    private boolean isHit;
     private boolean isDead;
     private boolean isDoused;
     private boolean isHealed;
@@ -34,6 +36,12 @@ public abstract class AbstractPlayer {
 
     public AbstractPlayer() {
 
+    }
+    
+    // Get player's selection 
+    public String getName() {
+        Scanner in = new Scanner( System.in );
+        return in.nextLine();
     }
     
     /**
@@ -62,14 +70,10 @@ public abstract class AbstractPlayer {
      */
     public void voteLynch( String candidateName ) {
 
-        for ( int i = 0; i < NightlyActions.getTownList().size(); i++ ) {
+        for ( int i = 0; i < NightlyActions.getPlayerList().size(); i++ ) {
             
-            if ( candidateName.equals( ( NightlyActions.getTownList().get( i ) ).getPlayerName() ) ) {
-                NightlyActions.getTownList().get( i ).addToLynchVote();
-            }
-
-            if ( candidateName.equals( ( NightlyActions.mafiaList.get( i ) ).getPlayerName() ) ) {
-                NightlyActions.mafiaList.get( i ).addToLynchVote();
+            if ( candidateName.equals( ( NightlyActions.getPlayerList().get( i ) ).getPlayerName() ) ) {
+                NightlyActions.getPlayerList().get( i ).addToLynchVote();
             }
         }
     }
@@ -85,14 +89,10 @@ public abstract class AbstractPlayer {
      */
     public void voteHit( String candidateName ) {
 
-        for ( int i = 0; i < NightlyActions.getTownList().size(); i++ ) {
+        for ( int i = 0; i < NightlyActions.getPlayerList().size(); i++ ) {
 
-            if ( candidateName.equals( ( NightlyActions.getTownList().get( i ) ).getPlayerName() ) ) {
-                NightlyActions.getTownList().get( i ).addToHitVote();
-            }
-
-            if ( candidateName.equals( ( NightlyActions.mafiaList.get( i ) ).getPlayerName() ) ) {
-                NightlyActions.mafiaList.get( i ).addToHitVote();
+            if ( candidateName.equals( ( NightlyActions.getPlayerList().get( i ) ).getPlayerName() ) ) {
+                NightlyActions.getPlayerList().get( i ).addToHitVote();
             }
         }
     }
@@ -123,12 +123,20 @@ public abstract class AbstractPlayer {
     public void addToHitVote() {
         this.voteHitCount = this.voteHitCount + 1;
     }
+    
+    public int getLynchCount() {
+        return this.voteLynchCount;
+    }
 
-    public void resetLynchVote() {
+    public int getHitCount() {
+        return this.voteHitCount;
+    }
+
+    public void resetLynchCount() {
         this.voteLynchCount = 0;
     }
 
-    public void resetHitVote() {
+    public void resetHitCount() {
         this.voteHitCount = 0;
     }
 
@@ -154,6 +162,22 @@ public abstract class AbstractPlayer {
 
     public void setRole( String role ) {
         this.role = role;
+    }
+    
+    public boolean isLynched() {
+        return isLynched;
+    }
+
+    public void setLynched( boolean isLynched ) {
+        this.isLynched = isLynched;
+    }
+    
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setHit( boolean isHit ) {
+        this.isHit = isHit;
     }
     
     public boolean isWillSet() {
