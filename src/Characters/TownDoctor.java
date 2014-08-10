@@ -12,6 +12,7 @@ public class TownDoctor extends AbstractPlayer {
         this.setDead( false );
         this.setDoused( false );
         this.setHealed( false );
+        this.setFramed (false );
         this.setPlayerName( playerName );
 
         addToTownList( this );

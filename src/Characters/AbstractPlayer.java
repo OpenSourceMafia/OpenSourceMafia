@@ -32,18 +32,18 @@ public abstract class AbstractPlayer {
     private boolean isDoused;
     private boolean isHealed;
     private boolean isBulletproof;
-
+    private boolean isFramed;
 
     public AbstractPlayer() {
 
     }
-    
-    // Get player's selection 
+
+    // Get player's selection
     public String getName() {
         Scanner in = new Scanner( System.in );
         return in.nextLine();
     }
-    
+
     /**
      * Set last will (Town and Mafia)
      * 
@@ -54,10 +54,10 @@ public abstract class AbstractPlayer {
         System.out.println( getPlayerName() + ": Enter your last will." );
         lastWill = in.nextLine();
     }
-    
+
     public void displayLastWill() {
-        System.out.println( playerName + "'s last will: "+ lastWill );
-        setWillSet(true);
+        System.out.println( playerName + "'s last will: " + lastWill );
+        setWillSet( true );
     }
 
     /**
@@ -71,7 +71,7 @@ public abstract class AbstractPlayer {
     public void voteLynch( String candidateName ) {
 
         for ( int i = 0; i < NightlyActions.getPlayerList().size(); i++ ) {
-            
+
             if ( candidateName.equals( ( NightlyActions.getPlayerList().get( i ) ).getPlayerName() ) ) {
                 NightlyActions.getPlayerList().get( i ).addToLynchVote();
             }
@@ -123,7 +123,7 @@ public abstract class AbstractPlayer {
     public void addToHitVote() {
         this.voteHitCount = this.voteHitCount + 1;
     }
-    
+
     public int getLynchCount() {
         return this.voteLynchCount;
     }
@@ -149,7 +149,11 @@ public abstract class AbstractPlayer {
     }
 
     public String getAffiliation() {
-        return affiliation;
+        if ( this.isFramed() ) {
+            return "Mafia";
+        } else {
+            return affiliation;
+        }
     }
 
     public void setAffiliation( String affiliation ) {
@@ -163,7 +167,7 @@ public abstract class AbstractPlayer {
     public void setRole( String role ) {
         this.role = role;
     }
-    
+
     public boolean isLynched() {
         return isLynched;
     }
@@ -171,7 +175,7 @@ public abstract class AbstractPlayer {
     public void setLynched( boolean isLynched ) {
         this.isLynched = isLynched;
     }
-    
+
     public boolean isHit() {
         return isHit;
     }
@@ -179,7 +183,7 @@ public abstract class AbstractPlayer {
     public void setHit( boolean isHit ) {
         this.isHit = isHit;
     }
-    
+
     public boolean isWillSet() {
         return isWillSet;
     }
@@ -219,6 +223,15 @@ public abstract class AbstractPlayer {
     public void setBulletproof( boolean isBulletproof ) {
         this.isBulletproof = isBulletproof;
     }
+
+    public boolean isFramed() {
+        return isFramed;
+    }
+
+    public void setFramed( boolean isFramed ) {
+        this.isFramed = isFramed;
+    }
+
 
     public String getPlayerName() {
         return playerName;

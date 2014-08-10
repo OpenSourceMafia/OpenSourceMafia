@@ -11,6 +11,7 @@ public class MafiaMafioso extends AbstractPlayer {
         this.setRole( "Mafioso" );
         this.setDead( false );
         this.setDoused( false );
+        this.setFramed (false );
         this.setPlayerName( playerName );
 
         addToMafiaList( this );

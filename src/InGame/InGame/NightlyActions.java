@@ -44,6 +44,12 @@ public class NightlyActions {
         getHitVictims().clear();
     }
 
+    public static void resetFramed() {
+        for ( AbstractPlayer player : playerList ) {
+            player.setFramed( false );
+        }
+    }
+
     public static void addToTownList( AbstractPlayer town ) {
         getTownList().add( town );
     }
@@ -85,6 +91,7 @@ public class NightlyActions {
         TownSheriff sheriff = new TownSheriff( "Sheriff Brady" );
         MafiaMafioso mafioso = new MafiaMafioso( "Mafioso Brando" );
         MafiaGodfather godfather = new MafiaGodfather( "Godfather Pacino" );
+        MafiaFramer framer = new MafiaFramer( "Framer Jones" );
         // Added to their respective mafia and town lists by now
 
         // Make combined player list
@@ -177,8 +184,8 @@ public class NightlyActions {
             }
 
             for ( int i = 0; i < NightlyActions.getPlayerList().size(); i++ ) {
-                if (( highestHitCount == NightlyActions.getPlayerList().get( i ).getHitCount() ) && 
-                ( NightlyActions.getPlayerList().get( i ).getHitCount() != 0 ) ) {
+                if ( ( highestHitCount == NightlyActions.getPlayerList().get( i ).getHitCount() )
+                        && ( NightlyActions.getPlayerList().get( i ).getHitCount() != 0 ) ) {
                     hitVictims.add( NightlyActions.getPlayerList().get( i ) );
                 }
             }
@@ -193,10 +200,13 @@ public class NightlyActions {
             }
             resetHighestHitCount();
 
+            // Reveal sheriff's investigation results
+            if ( !sheriff.isDead() ) {
+                sheriff.investigationResults();
+            }
+
+            // Reset framed status for all players
+            resetFramed();
         }
-
-
     }
-
-
 }

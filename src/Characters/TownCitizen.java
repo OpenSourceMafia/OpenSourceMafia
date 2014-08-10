@@ -10,6 +10,7 @@ public class TownCitizen extends AbstractPlayer {
         this.setDead( false );
         this.setDoused( false );
         this.setHealed( false );
+        this.setFramed (false );
         this.setPlayerName( playerName );
         this.setActionAmmo( 1 );
 
