@@ -1,6 +1,6 @@
 OpenSourceMafia
 ===============
-Text-based desktop prototype now complete. Android app currently in development.
+Currently supports up to 6 players. The narrator (game master) will collect the players' actions and submit them in this client. The results of each night is then calculated and determined. For best gameplay experience, highly recommended that the narrator role play and write backstory based on the nightly results.
 
 • Each player is randomly assigned a role and an alignment towards the Mafia or the Town.
 
