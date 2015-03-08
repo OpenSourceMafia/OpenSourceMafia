@@ -17,7 +17,7 @@ public class MafiaFramer extends AbstractPlayer {
         addToMafiaList( this );
     }
 
-    // Kill
+    
     @SuppressWarnings("resource")
     @Override
     public void nightAction() {

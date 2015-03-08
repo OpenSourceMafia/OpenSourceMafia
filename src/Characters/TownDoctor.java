@@ -3,6 +3,9 @@ package Characters;
 import java.util.Scanner;
 
 import InGame.NightlyActions;
+// need to solve concurrent action issue where if doctor goes first and heals someone, then someone hits them, they are healed accordingly
+// however, if they are hit first, and then healed then they die. therefore we need to finalize the action at the end of term in some kind of list
+
 
 public class TownDoctor extends AbstractPlayer {
 
@@ -31,14 +34,15 @@ public class TownDoctor extends AbstractPlayer {
         for ( int i = 0; i < NightlyActions.getTownList().size(); i++ ) {
 
             if ( candidateName.equals( ( NightlyActions.getTownList().get( i ) ).getPlayerName() ) ) {
-                NightlyActions.getTownList().get( i ).setHealed( true );
+                // Use common flag "setProtected" to solve concurrency issue
+                NightlyActions.getTownList().get( i ).setProtected( true );
             }
         }
 
         for ( int i = 0; i < NightlyActions.getMafiaList().size(); i++ ) {
 
             if ( candidateName.equals( ( NightlyActions.getMafiaList().get( i ) ).getPlayerName() ) ) {
-                NightlyActions.getMafiaList().get( i ).setHealed( true );
+                NightlyActions.getMafiaList().get( i ).setProtected( true );
             }
         }
     }

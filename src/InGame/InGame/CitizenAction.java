@@ -91,13 +91,13 @@ public class CitizenAction extends JPanel implements ActionListener {
 
 
             if ( citizenToPerform.getActionAmmo() > 0 ) {
-                citizenToPerform.setBulletproof( true );
+                citizenToPerform.setProtected( true ); // use common field "isProtected" instead
                 System.out.println( "You are bulletproof for tonight." );
                 citizenToPerform.setActionAmmo( citizenToPerform.getActionAmmo() - 1 );
 
                 System.out.println( "You have " + citizenToPerform.getActionAmmo() + " bulletproof vests left." );
             } else {
-                citizenToPerform.setBulletproof( false );
+                citizenToPerform.setProtected( false );
                 System.out.println( "No bulletproof vests are left." );
             }
 

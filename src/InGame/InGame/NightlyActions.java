@@ -1,9 +1,24 @@
 package InGame;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
 import Characters.*;
+
+// TODO: I could be using hashmaps instead of townlist with key playername and
+// abstract player as the value
+// then I could create the townmap and mafia map based affiliation
+
+// TODO: what I should do is we have a set of players that were marked for death
+// (hit, vigilante, etc.)
+// A set of players that were marked for protection (healed, bulletproof, etc.)
+// This list is determined at the end of each night
+// Then we kill the players in the death set that are not in protected set
+// This solves the concurrency issue where we just set isDead if not healed and
+// brings the implementation out of the individual actions but rather the game
+// controller (better)
+// COMPLETED
 
 public class NightlyActions {
     public static List<AbstractPlayer> townList; // The list of Town players
@@ -13,6 +28,10 @@ public class NightlyActions {
                                                       // be lynched
     private static List<AbstractPlayer> hitVictims; // The list of players to be
                                                     // hit
+
+    private static HashSet<AbstractPlayer> markedSet;
+    private static HashSet<AbstractPlayer> protectedSet;
+
     public static int day;
     private static int deadTownCount = 0;
     private static int deadMafiaCount = 0;
@@ -21,11 +40,14 @@ public class NightlyActions {
     private static int highestLynchCount = 0;
     private static int highestHitCount = 0;
 
-    public NightlyActions() {
+    private NightlyActions() { // make this the only existing instance of this
+                               // class (singleton)
         townList = new ArrayList<AbstractPlayer>();
         mafiaList = new ArrayList<AbstractPlayer>();
         lynchVictims = new ArrayList<AbstractPlayer>();
         hitVictims = new ArrayList<AbstractPlayer>();
+        markedSet = new HashSet<AbstractPlayer>();
+        protectedSet = new HashSet<AbstractPlayer>();
     }
 
     public static void resetHighestLynchCount() {
@@ -48,6 +70,26 @@ public class NightlyActions {
         for ( AbstractPlayer player : playerList ) {
             player.setFramed( false );
         }
+    }
+
+    public static void resetMarked() {
+        for ( AbstractPlayer player : playerList ) {
+            player.setMarked( false );
+        }
+    }
+
+    public static void resetProtected() {
+        for ( AbstractPlayer player : playerList ) {
+            player.setProtected( false );
+        }
+    }
+
+    public static void clearMarked() {
+        markedSet.clear();
+    }
+
+    public static void clearProtected() {
+        protectedSet.clear();
     }
 
     public static void addToTownList( AbstractPlayer town ) {
@@ -189,6 +231,36 @@ public class NightlyActions {
                     hitVictims.add( NightlyActions.getPlayerList().get( i ) );
                 }
             }
+
+            // Determine the players who should die (marked for death and not
+            // protected)
+            for ( AbstractPlayer player : playerList ) {
+                if ( !player.isDead() && player.isMarked() ) {
+                    markedSet.add( player );
+                }
+            }
+
+            for ( AbstractPlayer player : playerList ) {
+                if ( !player.isDead() && player.isProtected() ) {
+                    protectedSet.add( player );
+                }
+            }
+
+            // Kill the players who are in the marked set but are not in the
+            // protected set
+            markedSet.removeAll( protectedSet );
+
+            for ( AbstractPlayer player : markedSet ) {
+                player.setDead( true );
+            }
+
+
+            // Have to reset healed and mark status
+            clearMarked();
+            clearProtected();
+            resetMarked();
+            resetProtected();
+
 
             // Hit all the victims with the highest hit count
             for ( int i = 0; i < hitVictims.size(); i++ ) {

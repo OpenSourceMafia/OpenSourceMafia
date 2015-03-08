@@ -29,9 +29,11 @@ public abstract class AbstractPlayer {
     private boolean isLynched;
     private boolean isHit;
     private boolean isDead;
+    private boolean isMarked;
+    private boolean isProtected;
     private boolean isDoused;
-    private boolean isHealed;
-    private boolean isBulletproof;
+    private boolean isHealed; // redundant
+    private boolean isBulletproof; // redundant
     private boolean isFramed;
 
     public AbstractPlayer() {
@@ -150,7 +152,7 @@ public abstract class AbstractPlayer {
 
     public String getAffiliation() {
         if ( this.isFramed() ) {
-            return "Mafia";
+            return "Mafia"; // affiliation field remains accurate, but framed affiliation will be Mafia
         } else {
             return affiliation;
         }
@@ -198,6 +200,22 @@ public abstract class AbstractPlayer {
 
     public void setDead( boolean isDead ) {
         this.isDead = isDead;
+    }
+    
+    public boolean isMarked() {
+        return isMarked;
+    }
+
+    public void setMarked( boolean isMarked ) {
+        this.isMarked = isMarked;
+    }
+    
+    public boolean isProtected() {
+        return isProtected;
+    }
+
+    public void setProtected( boolean isProtected ) {
+        this.isProtected = isProtected;
     }
 
     public boolean isDoused() {

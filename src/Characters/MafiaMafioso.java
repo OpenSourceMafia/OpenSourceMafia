@@ -32,18 +32,21 @@ public class MafiaMafioso extends AbstractPlayer {
         for ( int i = 0; i < NightlyActions.getTownList().size(); i++ ) {
 
             if ( candidateName.equals( ( NightlyActions.getTownList().get( i ) ).getPlayerName() ) ) {
-                if ( ! ( NightlyActions.getTownList().get( i ).isBulletproof() ) && ! ( NightlyActions.getTownList().get( i ).isHealed() ) ) {
-                    NightlyActions.getTownList().get( i ).setDead( true );
-                }
+//                if ( ! ( NightlyActions.getTownList().get( i ).isBulletproof() ) && ! ( NightlyActions.getTownList().get( i ).isHealed() ) ) {
+//                    NightlyActions.getTownList().get( i ).setDead( true );
+//                }
+                NightlyActions.getTownList().get(i).setMarked(true);
             }
         }
 
         for ( int i = 0; i < NightlyActions.getMafiaList().size(); i++ ) {
 
             if ( candidateName.equals( ( NightlyActions.getMafiaList().get( i ) ).getPlayerName() ) ) {
-                if ( ! ( NightlyActions.getMafiaList().get( i ).isBulletproof() ) && ! ( NightlyActions.getMafiaList().get( i ).isHealed() ) ) {
-                    NightlyActions.getMafiaList().get( i ).setDead( true );
-                }
+//                if ( ! ( NightlyActions.getMafiaList().get( i ).isBulletproof() ) && ! ( NightlyActions.getMafiaList().get( i ).isHealed() ) ) {
+//                    NightlyActions.getMafiaList().get( i ).setDead( true );
+//                }
+                // mark the player for death instead, solves concurrency issue
+                NightlyActions.getMafiaList().get(i).setMarked(true);
             }
         }
     }
